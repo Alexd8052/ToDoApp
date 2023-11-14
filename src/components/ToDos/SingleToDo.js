@@ -5,7 +5,7 @@ import ToDoEdit from './ToDoEdit'
 import axios from 'axios'
 
 export default function SingleToDo(props) {
-    const {name, description, toDoId} = props.todo
+    const {name, toDoId} = props.toDo
     const [showEdit, setShowEdit] = useState(false)
     const {currentUser} = useAuth()
 
@@ -29,7 +29,7 @@ export default function SingleToDo(props) {
                 </button>
                 {showEdit &&
                     <ToDoEdit 
-                        todo={props.todo}
+                        toDo={props.toDo}
                         showEdit={showEdit}
                         setShowEdit={setShowEdit}
                         getToDos={props.getToDos} />
@@ -37,9 +37,6 @@ export default function SingleToDo(props) {
             </div>
         }
         <h3>{name}</h3>
-        {description !== null ?
-            <p>{description}</p> : <p>No description provided.</p>
-        }
     </div>
   )
 }

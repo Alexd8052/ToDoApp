@@ -8,7 +8,7 @@ import CatCreate from './CatCreate'
 
 export default function Categories() {
 
-  const [categories, setCategories] = useState([]);
+  const [categories, setCategories] = useState([])
   const {currentUser} = useAuth()
   const [showCreate, setShowCreate] = useState(false)
 

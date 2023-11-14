@@ -1,5 +1,5 @@
 import React from 'react'
-import {Nav, Navbar, Image} from 'react-bootstrap'
+import {Nav, Navbar} from 'react-bootstrap'
 import {Link} from 'react-router-dom'
 import {useAuth} from '../contexts/AuthContext'
 
@@ -8,7 +8,7 @@ export default function Navigation() {
 
   return (
     <Navbar bg='dark' variant='dark' expand='md' className="p-3">
-        <Navbar.Brand href='/'>ToDo</Navbar.Brand>
+        <Navbar.Brand href='/'>ReactJS ToDo App</Navbar.Brand>
         <Navbar.Toggle />
         <Navbar.Collapse className='justify-content-end'>
             <Nav>

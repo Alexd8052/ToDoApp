@@ -23,13 +23,13 @@ export default function Todos() {
   }, [])
 
   return (
-    <section className="resources">
-      <article className="bg-info p-5">
+    <section className="toDos">
+      <article className="bg-danger p-5">
         <h1 className='text-center'>ToDo Dashboard</h1>
       </article>
       {currentUser.email === process.env.REACT_APP_ADMIN_EMAIL &&
         <div className="bg-dark p-2 mb-3 text-center">
-          <button onClick={() => setShowCreate(!showCreate)} className="btn btn-info">
+          <button className="btn btn-info" onClick={() => setShowCreate(!showCreate)}>
             {!showCreate ? 'Create New ToDo' : 'Cancel'}
           </button>
           <div className="createContainer">
