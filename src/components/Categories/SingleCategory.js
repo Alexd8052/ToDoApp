@@ -6,12 +6,12 @@ import axios from 'axios'
 
 export default function SingleCategory(props) {
 
-    const {categoryName, categoryDescription, categoryId} = props.category
+    const {catName, catDesc, categoryId} = props.category
     const {currentUser} = useAuth()
     const [showEdit, setShowEdit] = useState(false)
 
     const deleteCat = (id) => {
-        if(window.confirm(`Are you sure you want to delete ${categoryName}?`)){
+        if(window.confirm(`Are you sure you want to delete ${catName}?`)){
             axios.delete(`https://localhost:7108/api/Categories/${id}`).then(() => {
                 props.getCategories()
             })
@@ -20,8 +20,8 @@ export default function SingleCategory(props) {
 
     return (
         <tr>
-            <td>{categoryName}</td>
-            <td>{categoryDescription}</td>
+            <td>{catName}</td>
+            <td>{catDesc}</td>
             {currentUser.email === process.env.REACT_APP_ADMIN_EMAIL &&
                 <td>
                     <button onClick={() => setShowEdit(true)} className='m-1 rounded' id='editLink'>

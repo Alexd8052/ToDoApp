@@ -5,9 +5,9 @@ import ToDoEdit from './ToDoEdit'
 import axios from 'axios'
 
 export default function SingleToDo(props) {
-    const {name, toDoId} = props.toDo
-    const [showEdit, setShowEdit] = useState(false)
+    const {name, done, toDoId, categoryId} = props.toDo
     const {currentUser} = useAuth()
+    const [showEdit, setShowEdit] = useState(false)
 
     const deleteToDo = (id) => {
         if(window.confirm(`Are you sure you want to delete ${name}?`)){
@@ -18,25 +18,26 @@ export default function SingleToDo(props) {
     }
 
   return (
-    <div className='singleToDo col-md-5 m-4'>
+    <tr>
+        <td>{name}</td>
+        <td>{categoryId}</td>
+        <td>{done}</td>
         {currentUser.email === process.env.REACT_APP_ADMIN_EMAIL &&
-            <div>
-                <button onClick={() => setShowEdit(true)} id='editLink'>
-                    <FaEdit />
+            <td>
+                <button onClick={() => setShowEdit(true)} className="m-1 rounded" id="editLink">
+                <FaEdit />
                 </button>
-                <button onClick={() => deleteToDo(toDoId)} id='deleteLink'>
-                    <FaTrashAlt />
+                <button onClick={() => deleteToDo(toDoId)} className="m-1 rounded" id="deleteLink">
+                <FaTrashAlt />
                 </button>
                 {showEdit &&
-                    <ToDoEdit 
-                        toDo={props.toDo}
-                        showEdit={showEdit}
-                        setShowEdit={setShowEdit}
-                        getToDos={props.getToDos} />
+                <ToDoEdit setShowEdit={setShowEdit}
+                showEdit={showEdit}
+                getToDos={props.getToDos}
+                toDo={props.toDo} />
                 }
-            </div>
+            </td>
         }
-        <h3>{name}</h3>
-    </div>
+    </tr>
   )
 }

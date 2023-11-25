@@ -2,7 +2,6 @@ import React, {useState, useEffect} from 'react'
 import axios from 'axios'
 import Container from 'react-bootstrap/Container'
 import SingleToDo from './SingleToDo'
-import FilterCat from './FilterCat'
 import {useAuth} from '../../contexts/AuthContext'
 import ToDoCreate from './ToDoCreate'
 
@@ -10,10 +9,10 @@ export default function Todos() {
   const [toDos, setToDos] = useState([])
   const {currentUser} = useAuth()
   const [showCreate, setShowCreate] = useState(false)
-  const [filter, setFilter] = useState(0)
 
   const getToDos = () => {
     axios.get(`https://localhost:7108/api/ToDos`).then(response => {
+      console.log(response)
       setToDos(response.data)
     })
   }
@@ -29,33 +28,38 @@ export default function Todos() {
       </article>
       {currentUser.email === process.env.REACT_APP_ADMIN_EMAIL &&
         <div className="bg-dark p-2 mb-3 text-center">
-          <button className="btn btn-info" onClick={() => setShowCreate(!showCreate)}>
-            {!showCreate ? 'Create New ToDo' : 'Cancel'}
-          </button>
-          <div className="createContainer">
-            {showCreate &&
-              <ToDoCreate 
-                getToDos={getToDos}
-                setShowCreate={setShowCreate} />
-            }
-          </div>
+          {showCreate ? 
+            <>
+              <button onClick={() => setShowCreate(false)} className="btn btn-warning">
+                Cancel
+              </button>
+              <ToDoCreate getCategories={getToDos} setShowCreate={setShowCreate} />
+            </> :
+            <button onClick={() => setShowCreate(true)} className="btn btn-info">
+              Create ToDo
+            </button>
+          }
         </div>
       }
-      <FilterCat setFilter={setFilter} />
-      <Container>
-        <article className="toDoGallery row justify-content-center">
-          {filter === 0 ? toDos.map(td =>
-            <SingleToDo key={td.ToDoId} toDo={td} getToDos={getToDos} />
-          ) :
-          toDos.filter(td => td.categoryId === filter).map(td =>
-            <SingleToDo key={td.toDoId} toDo={td} getToDos={getToDos} />
+      <Container className="p-2">
+        <table className="table bg-info table-dark my-3">
+          <thead className="table-secondary text-uppercase">
+            <tr>
+              <th>Name</th>
+              <th>Category</th>
+              <th>Done?</th>
+              {currentUser.email === process.env.REACT_APP_ADMIN_EMAIL &&
+                <th>Actions</th>
+              }
+            </tr>
+          </thead>
+          <tbody>
+            {toDos.map(td =>
+              <SingleToDo key={td.toDoId} toDo={td}
+              getToDos={getToDos} />  
             )}
-            {filter !== 0 && toDos.filter(td => td.categoryId === filter).length === 0 &&
-              <h2 className="alert alert-warning text-dark">
-                There are no results for this category.
-              </h2>
-            }
-        </article>
+          </tbody>
+        </table>
       </Container>
     </section>
   )

@@ -23,11 +23,11 @@ export default function ToDoForm(props) {
             })
         } else {
             const toDoToEdit = {
-                toDoId: props.todo.toDoId,
+                toDoId: props.toDo.toDoId,
                 name: values.name,
                 categoryId: values.categoryId
             }
-            axios.put(`https://localhost:7108/api/ToDos/${props.todo.toDoId}`, toDoToEdit).then(() => {
+            axios.put(`https://localhost:7108/api/ToDos/${props.toDo.toDoId}`, toDoToEdit).then(() => {
                 props.setShowEdit(false)
                 props.getToDos()
             })
@@ -37,8 +37,8 @@ export default function ToDoForm(props) {
     <Formik
         validationSchema={toDoSchema}
         initialValues={{
-            name: props.todo ? props.todo.name : '',
-            categoryId: props.todo ? props.todo.categoryId : ''
+            name: props.todo ? props.toDo.name : '',
+            categoryId: props.todo ? props.toDo.categoryId : ''
         }}
         onSubmit={(values) => handleSubmit(values)}>
         {({errors, touched}) => (
@@ -54,7 +54,7 @@ export default function ToDoForm(props) {
                     </option>
                     {categories.map(cat => 
                         <option key={cat.categoryId} value={cat.categoryId}>
-                            {cat.categoryName}
+                            {cat.catName}
                         </option>
                     )}
                     </Field>
