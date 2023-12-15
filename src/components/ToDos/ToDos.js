@@ -6,20 +6,39 @@ import {useAuth} from '../../contexts/AuthContext'
 import ToDoCreate from './ToDoCreate'
 
 export default function Todos() {
-  const [toDos, setToDos] = useState([])
-  const {currentUser} = useAuth()
-  const [showCreate, setShowCreate] = useState(false)
+  const [toDos, setToDos] = useState([]);
+  const { currentUser } = useAuth();
+  const [showCreate, setShowCreate] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  const getToDos = () => {
-    axios.get(`https://localhost:7108/api/ToDos`).then(response => {
-      console.log(response)
-      setToDos(response.data)
-    })
-  }
+  const getToDos = async () => {
+    try {
+      const response = await axios.get(`https://localhost:7108/api/ToDos`);
+      setToDos(response.data);
+    } catch (error) {
+      setError(error.message || 'An error occurred while fetching ToDos.');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    getToDos()
-  }, [])
+    getToDos();
+  }, []);
+
+  if (loading) {
+    return <p>Loading...</p>;
+  }
+
+  if (error) {
+    return <p>Error: {error}</p>;
+  }
+
+  // Check if currentUser is not null before accessing email property
+  if (!currentUser || !currentUser.email) {
+    return <p>Error: User information not available.</p>;
+  }
 
   return (
     <section className="toDos">
@@ -33,7 +52,7 @@ export default function Todos() {
               <button onClick={() => setShowCreate(false)} className="btn btn-warning">
                 Cancel
               </button>
-              <ToDoCreate getCategories={getToDos} setShowCreate={setShowCreate} />
+              <ToDoCreate getToDos={getToDos} setShowCreate={setShowCreate} />
             </> :
             <button onClick={() => setShowCreate(true)} className="btn btn-info">
               Create ToDo
