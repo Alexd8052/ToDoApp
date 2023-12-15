@@ -10,9 +10,8 @@ export default function Welcome() {
             <h1 className='justify-content-center mt-3 mb-3'>Welcome To My To-Do app</h1>
             <div className='row'>
                 <div className='welcomeText col-md-7'>
-                    <h3 className='text-center mt-1 HeaderText'>Meet The Developer</h3>
                     <p className='pText'>
-                        Greetings! I'm Alex Davenport, delighted to have you explore my creation, the React To-Do app! Crafted using
+                        Hello! I'm Alex Davenport, delighted to have you explore my creation, the React To-Do app! Crafted using
                         <a href='https://reactjs.org/' target='_blank' rel='noreferrer' class='p-link'>
                             ReactJS 
                         </a>

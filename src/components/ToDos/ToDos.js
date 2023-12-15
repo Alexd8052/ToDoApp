@@ -10,7 +10,9 @@ export default function Todos() {
   const [toDos, setToDos] = useState([]);
   const { currentUser } = useAuth();
   const [showCreate, setShowCreate] = useState(false);
-  const [filter, setFilter] = useState(0); 
+  const [filter, setFilter] = useState(0);
+  const [showCompleted, setShowCompleted] = useState(false);
+ 
 
   const getToDos = () => {
     axios.get(`https://localhost:7108/api/ToDos`).then(response => {
@@ -18,12 +20,16 @@ export default function Todos() {
       setToDos(response.data);
     });
   };
-
+  
   useEffect(() => {
     getToDos();
-  }, [filter]); 
+  }, [filter, showCompleted]);
+  
+  const filteredToDos = filter === 0
+  ? (showCompleted ? toDos : toDos.filter(todo => !todo.done))
+  : (showCompleted ? toDos.filter(todo => todo.category?.categoryId === filter) : toDos.filter(todo => todo.category?.categoryId === filter && !todo.done));
 
-  const filteredToDos = filter === 0 ? toDos : toDos.filter(todo => todo.category?.categoryId === filter);
+  
 
   return (
     <section className="toDos">
@@ -46,7 +52,7 @@ export default function Todos() {
           )}
         </div>
       )}
-      <FilterCat setFilter={setFilter} /> 
+      <FilterCat setFilter={setFilter} setShowCompleted={setShowCompleted} showCompleted={showCompleted} /> 
       <Container className="p-2">
         <table className="table bg-info table-dark my-3">
           <thead className="table-secondary text-uppercase">
