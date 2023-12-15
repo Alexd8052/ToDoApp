@@ -1,8 +1,8 @@
 import * as Yup from 'yup'
 
 const catSchema = Yup.object().shape({
-    categoryName: Yup.string().max(25, 'Max 25 characters').required('Required'),
-    categoryDescription: Yup.string().max(50, 'Max 50 characters')
+    catName: Yup.string().max(25, 'Max 25 characters').required('Required'),
+    catDesc: Yup.string().max(50, 'Max 50 characters')
 })
 
 const toDoSchema = Yup.object().shape({

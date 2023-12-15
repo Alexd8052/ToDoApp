@@ -2,6 +2,7 @@ import React from 'react'
 import {Nav, Navbar} from 'react-bootstrap'
 import {Link} from 'react-router-dom'
 import {useAuth} from '../contexts/AuthContext'
+import Welcome from './Welcome'
 
 export default function Navigation() {
   const {currentUser} = useAuth()
@@ -12,6 +13,7 @@ export default function Navigation() {
         <Navbar.Toggle />
         <Navbar.Collapse className='justify-content-end'>
             <Nav>
+            <Link to='/' className='nav-link'>Welcome</Link>
               {currentUser && 
                 <>
                   <Link to='/todos' className='nav-link'>ToDos</Link>

@@ -3,7 +3,7 @@ import Modal from 'react-bootstrap/Modal';
 import ToDoForm from './ToDoForm';
 
 export default function ToDoEdit(props) {
-  const todoName = props.todo?.name || ''; 
+  const todoName = props.toDo?.name || ''; 
 
   return (
     <Modal
@@ -18,7 +18,7 @@ export default function ToDoEdit(props) {
         <ToDoForm
           setShowEdit={props.setShowEdit}
           getToDos={props.getToDos}
-          todo={props.todo}
+          todo={props.toDo}
         />
       </Modal.Body>
     </Modal>

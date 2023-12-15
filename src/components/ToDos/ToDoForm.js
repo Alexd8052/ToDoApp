@@ -14,33 +14,37 @@ export default function ToDoForm(props) {
     }, [])
 
     const handleSubmit = (values) => {
-        console.log(values)
-        if(!props.todo){
-            const toDoToCreate = values
-            axios.post(`https://localhost:7108/api/ToDos`, toDoToCreate).then(() => {
-                props.setShowCreate(false)
-                props.getToDos()
-            })
+        console.log(values);
+      
+        if (!props.todo) {
+          // If there is no todo, create a new one
+          const toDoToCreate = values;
+          axios.post(`https://localhost:7108/api/ToDos`, toDoToCreate).then(() => {
+            props.setShowCreate(false);
+            props.getToDos();
+          });
         } else {
-            const toDoToEdit = {
-                toDoId: props.toDo.toDoId,
-                name: values.name,
-                categoryId: values.categoryId
-            }
-            axios.put(`https://localhost:7108/api/ToDos/${props.toDo.toDoId}`, toDoToEdit).then(() => {
-                props.setShowEdit(false)
-                props.getToDos()
-            })
+          // If there is a todo, edit an existing one
+          const toDoToEdit = {
+            toDoId: props.todo.toDoId,
+            name: values.name,
+            categoryId: values.categoryId
+          };
+      
+          axios.put(`https://localhost:7108/api/ToDos/${props.todo.toDoId}`, toDoToEdit).then(() => {
+            props.setShowEdit(false);
+            props.getToDos();
+          });
         }
-    }
+      };
   return (
     <Formik
         validationSchema={toDoSchema}
         initialValues={{
-            name: props.todo ? props.toDo.name : '',
-            categoryId: props.todo ? props.toDo.categoryId : ''
+        name: props.todo ? props.todo.name : '',
+        categoryId: props.todo ? props.todo.categoryId : ''
         }}
-        onSubmit={(values) => handleSubmit(values)}>
+        onSubmit={(values) => handleSubmit(values, props.todo)}>
         {({errors, touched}) => (
             <Form id='toDoForm'>
                 <div className="form-group m-3">

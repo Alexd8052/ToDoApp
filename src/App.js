@@ -10,6 +10,7 @@ import AuthProvider from './contexts/AuthContext'
 import ProtectedRoute from './components/ProtectedRoute'
 import Footer from './components/Footer'
 import Todos from './components/ToDos/Todos'
+import Welcome from './components/Welcome'
 
 function App() {
   return (
@@ -18,7 +19,7 @@ function App() {
         <Router>
           <Navigation />
           <Routes>
-            <Route path='/' element={<Todos />} />
+            <Route path='/' element={<Welcome/>} />
             <Route path='/todos' element={<ProtectedRoute><Todos /></ProtectedRoute>} />
             <Route path='/categories' element={<ProtectedRoute><Categories /></ProtectedRoute>} />
             <Route path='/login' element={<Login />} />
